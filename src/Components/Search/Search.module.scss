@@ -1,0 +1,46 @@
+.container{
+  display: flex;
+  align-items: center;
+  width: 460px;
+  height: 40px;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #EC5E2A;
+  border-radius: 12px;
+  margin-left: 20px;
+  position: relative;
+
+  input{
+    background-color: inherit;
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    height: 100%;
+    width: 100%;
+    padding: 0 40px 0 60px;
+    font-size: 14px;
+    color: black;
+
+    &::placeholder{
+      color: rgb(0, 0, 0);
+      opacity: .8;
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+  svg{
+    pointer-events: none;
+    position: absolute;
+    left: 20px;
+    top: 9px;  
+    
+    path{
+      stroke: #EC5E2A;
+    }
+  }
+}
+// responsive design
+@media(max-width: 1180px){
+  .container{
+    display: none;
+  }
+}

@@ -1,0 +1,52 @@
+.container{
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #EC5E2A;
+}
+.inner{
+  max-width: 1366px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 100px;
+
+  .phoneHolder{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    p{
+      color: white;
+      margin-left: 10px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+  }
+  .navigation{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    a{
+      margin-left: 20px;
+      color: rgb(255, 255, 255, 0.7);
+      cursor: pointer;
+      font-size: 12px;
+
+      &:hover{
+        color: white;
+      }
+    }
+  }
+}
+
+// responsive design
+@media(max-width: 1180px){
+  .container{
+    display: none;
+  }
+}

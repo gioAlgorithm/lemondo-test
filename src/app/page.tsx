@@ -1,94 +1,45 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client'
+import { IconApple, IconArrowRight, IconHorizontal, IconVertical } from "@/icons";
+import styles from "./page.module.scss";
+import SortButton from "@/Components/SortButton";
+import { useState } from "react";
+import Filter from "@/Components/Filter";
+import ProductContainer from "./_components/ProductContainer";
 
 export default function Home() {
+
+  //state to change the style of the cards
+  const [verticalStyle, setVerticalStyle] = useState<boolean>(true)
+
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+      <div className={styles.inner}>
+        <div className={styles.header}>
+          <div className={styles.leftBox}>
+            <IconArrowRight />
+            <div className={styles.box}>
+              <IconApple />
+              <h4>Apple</h4>
+            </div>
+          </div>
+
+          <div className={styles.rightBox}>
+            <div className={styles.btnBox}>
+              <SortButton />
+            </div>
+            <div className={`${styles.verticalButton} ${verticalStyle ? styles.active : ''}`} onClick={()=> setVerticalStyle(true)}>
+              <IconVertical />
+            </div>
+            <div className={`${styles.horizontalButton} ${!verticalStyle ? styles.active : ''}`} onClick={()=> setVerticalStyle(false)}>
+              <IconHorizontal />
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+        <div className={styles.content}>
+          <Filter />
+          <ProductContainer />
+        </div>
       </div>
     </main>
   );

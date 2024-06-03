@@ -1,0 +1,13 @@
+export {default as IconPhone} from "./phone.svg";
+export {default as IconBurger} from './burger.svg'
+export {default as IconSearch} from './search-normal.svg'
+export {default as IconCart} from './shopping-cart.svg'
+export {default as IconProfile} from './profile-circle.svg'
+export {default as IconArrowSwap} from './arrow-swap-horizontal.svg'
+export {default as IconHome} from './home.svg'
+export {default as IconMenu} from './menu.svg'
+export {default as IconArrowRight} from "./arrow-right.svg"
+export {default as IconApple} from "./apple.svg"
+export {default as IconArrowDown} from "./arrow-down.svg"
+export {default as IconVertical} from './vertical-grid.svg'
+export {default as IconHorizontal} from "./horizontal-grid.svg"
