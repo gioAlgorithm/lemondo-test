@@ -9,6 +9,8 @@
   display: none;
   grid-template-columns: repeat(5, 1fr);
   gap: 10px;
+  background-color: white;
+  z-index: 100;
 }
 // responsive design
 @media(max-width: 1180px){

@@ -6,6 +6,6 @@ interface Props {
 
 export default function Filter(props: Props) {
   return (
-    <div className={styles.container}></div>
+    <div className={styles.container}>bitch</div>
   )
 }

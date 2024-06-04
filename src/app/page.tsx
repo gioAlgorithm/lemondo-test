@@ -38,7 +38,7 @@ export default function Home() {
 
         <div className={styles.content}>
           <Filter />
-          <ProductContainer />
+          <ProductContainer verticalStyle={verticalStyle} />
         </div>
       </div>
     </main>
