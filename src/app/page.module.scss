@@ -92,8 +92,41 @@
     }
   }
 }
+.headerResponsive{
+  width: 100%;
+  height: 52px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #F2F2F2;
+  display: none;
+
+  .headerResBox{
+    width: 48%;
+  }
+}
 .content{
   display: flex;
   width: fit-content;
   width: 100%;
+}
+
+@media(max-width: 1180px){
+  .header{
+    .rightBox{
+      .btnBox{
+        display: none;
+      }
+    }
+  }
+  .inner{
+    padding: 0 20px;
+  }
+  .headerResponsive{
+    display: flex;
+  }
+  .content{
+    .filterContainer{
+      display: none;
+    }
+  }
 }

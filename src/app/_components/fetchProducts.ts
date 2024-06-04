@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://zoommer-api.lemon.do/v1/Products/v3?CategoryId=21&Page=1&Limit=60';
+const API_URL = 'https://zoommer-api.lemon.do/v1/Products/v3?CategoryId=21';
 
 export interface Product {
   id: number;
@@ -17,14 +17,14 @@ export interface Product {
   brandName: string | null;
 }
 
-export const fetchProducts = async (): Promise<Product[]> => {
+export const fetchProducts = async (page: number, limit = 12): Promise<Product[]> => {
   try {
-    const response = await axios.get(API_URL);
+    const response = await axios.get(`${API_URL}&Page=${page}&Limit=${limit}`);
 
     if (response.status === 200) {
-      return response.data.products; // Access the products array directly
+      return response.data.products;
     } else {
-      throw new Error('Failed to fetch products');
+      throw new Error(`Failed to fetch products (status: ${response.status})`);
     }
   } catch (error) {
     console.error('Error fetching products:', error);

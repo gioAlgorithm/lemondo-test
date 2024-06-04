@@ -5,6 +5,7 @@ import SortButton from "@/Components/SortButton";
 import { useState } from "react";
 import Filter from "@/Components/Filter";
 import ProductContainer from "./_components/ProductContainer";
+import FilterButton from "@/Components/FilterButton";
 
 export default function Home() {
 
@@ -35,9 +36,19 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <div className={styles.headerResponsive}>
+          <div className={styles.headerResBox}>
+            <SortButton />
+          </div>
+          <div className={styles.headerResBox}>
+            <FilterButton />
+          </div>
+        </div>
 
         <div className={styles.content}>
-          <Filter />
+          <div className={styles.filterContainer}>
+            <Filter />
+          </div>
           <ProductContainer verticalStyle={verticalStyle} />
         </div>
       </div>

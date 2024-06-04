@@ -186,3 +186,13 @@
     }
   }
 }
+
+// responsive design
+@media(max-width: 630px){
+  .horizontalCard{
+    .btnBox{
+      top: auto;
+      bottom: 10px;
+    }
+  }
+}

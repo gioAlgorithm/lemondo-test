@@ -11,3 +11,4 @@ export {default as IconApple} from "./apple.svg"
 export {default as IconArrowDown} from "./arrow-down.svg"
 export {default as IconVertical} from './vertical-grid.svg'
 export {default as IconHorizontal} from "./horizontal-grid.svg"
+export {default as IconFilter} from "./filter.svg"
