@@ -17,9 +17,14 @@ export interface Product {
   brandName: string | null;
 }
 
-export const fetchProducts = async (page: number, limit = 12): Promise<Product[]> => {
+export const fetchProducts = async (page: number, limit = 12, sortBy?: string): Promise<Product[]> => {
   try {
-    const response = await axios.get(`${API_URL}&Page=${page}&Limit=${limit}`);
+    let url = `${API_URL}&Page=${page}&Limit=${limit}`;
+    if (sortBy) {
+      url += `&SortBy=${sortBy}`;
+    }
+
+    const response = await axios.get(url);
 
     if (response.status === 200) {
       return response.data.products;
