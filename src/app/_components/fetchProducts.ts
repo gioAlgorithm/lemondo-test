@@ -17,13 +17,15 @@ export interface Product {
   brandName: string | null;
 }
 
-export const fetchProducts = async (page: number, limit = 12, sortBy?: string): Promise<Product[]> => {
+export const fetchProducts = async (page: number, limit = 12, sortBy?: string | null, specificationIds?: number[]): Promise<Product[]> => {
   try {
     let url = `${API_URL}&Page=${page}&Limit=${limit}`;
     if (sortBy) {
       url += `&SortBy=${sortBy}`;
     }
-
+    if (specificationIds && specificationIds.length > 0) {
+      url += `&SpecificationIds=${specificationIds.join(",")}`;
+    }
     const response = await axios.get(url);
 
     if (response.status === 200) {

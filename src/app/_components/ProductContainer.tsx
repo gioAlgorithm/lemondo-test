@@ -7,14 +7,25 @@ import ProductCard from "@/Components/ProductCard";
 interface Props {
   verticalStyle: boolean;
   sortBy: string | null;
+  selectedSpecifications: number[];
 }
 
-const ProductContainer = ({ verticalStyle, sortBy }: Props) => {
+const ProductContainer = ({
+  verticalStyle,
+  sortBy,
+  selectedSpecifications,
+}: Props) => {
   const [fetchedProducts, setFetchedProducts] = useState<Product[]>([]);
   const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState<number>(1);
+
+  const resetState = () => {
+    setFetchedProducts([]);
+    setSortedProducts([]);
+    setPage(1);
+  };
 
   // Fetch products when component mounts or when the page state updates
   useEffect(() => {
@@ -35,7 +46,7 @@ const ProductContainer = ({ verticalStyle, sortBy }: Props) => {
 
   // Fetch more products when the page state updates
   useEffect(() => {
-    if (page === 1) return; // Skip initial fetch as it's already handled
+    if (selectedSpecifications.length > 0 || page === 1) return; // Skip if filters are applied or initial fetch is done
 
     const fetchMoreProducts = async () => {
       try {
@@ -50,7 +61,7 @@ const ProductContainer = ({ verticalStyle, sortBy }: Props) => {
     };
 
     fetchMoreProducts();
-  }, [page]);
+  }, [page, selectedSpecifications]);
 
   // Sort products based on sortBy state
   useEffect(() => {
@@ -78,6 +89,40 @@ const ProductContainer = ({ verticalStyle, sortBy }: Props) => {
     setSortedProducts(sortProducts(fetchedProducts, sortBy));
   }, [sortBy, fetchedProducts]);
 
+  // Fetch filtered products when selected specifications change
+  useEffect(() => {
+    const fetchFilteredProducts = async () => {
+      try {
+        setLoading(true);
+        const filteredProducts = await fetchProducts(1, 999, null, selectedSpecifications);
+        setFetchedProducts(filteredProducts);
+        setLoading(false);
+      } catch (error) {
+        setError("Failed to fetch filtered products");
+        setLoading(false);
+      }
+    };
+
+    if (selectedSpecifications.length > 0) {
+      resetState(); // Reset the state before fetching new filtered products
+      fetchFilteredProducts();
+    } else {
+      resetState(); // Reset the state before fetching new products without filters
+      const fetchInitialProducts = async () => {
+        try {
+          setLoading(true);
+          const initialProducts = await fetchProducts(1);
+          setFetchedProducts(initialProducts);
+          setLoading(false);
+        } catch (error) {
+          setError("Failed to fetch products");
+          setLoading(false);
+        }
+      };
+      fetchInitialProducts();
+    }
+  }, [selectedSpecifications]);
+
   if (loading && page === 1) {
     return <div>Loading...</div>;
   }
@@ -101,7 +146,7 @@ const ProductContainer = ({ verticalStyle, sortBy }: Props) => {
           </li>
         ))}
       </ul>
-      {sortedProducts.length % 12 === 0 && sortedProducts.length >= 12 && (
+      {selectedSpecifications.length === 0 && sortedProducts.length % 12 === 0 && sortedProducts.length >= 12 && (
         <button className={styles.more} onClick={() => setPage(page + 1)}>
           {loading ? `Loading...` : `ნახე მეტი`}
         </button>

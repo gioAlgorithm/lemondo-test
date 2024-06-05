@@ -1,13 +1,17 @@
 "use client";
-import { IconArrowDown, IconCheckSquare, IconTrash } from "@/icons";
+import { IconArrowDown, IconCheckSquare, IconEmptyCheckSquare, IconTrash } from "@/icons";
 import styles from "./Filter.module.scss";
 import { useEffect, useState } from "react";
 import type { Filter, FilterSpecification, FilterValue } from "./fetchFilter"; // Importing types
 import { fetchFilter } from "./fetchFilter"; // Importing fetchFilter function
 
-interface Props {}
+interface Props {
+  selectedSpecifications: number[];
+  setSelectedSpecifications: (value: number[] | ((prev: number[]) => number[])) => void;
+}
 
 export default function Filter(props: Props) {
+  const {selectedSpecifications, setSelectedSpecifications} = props
   const [filterData, setFilterData] = useState<Filter | null>(null);
   const [expandMap, setExpandMap] = useState<{ [key: string]: boolean }>({});
 
@@ -42,11 +46,23 @@ export default function Filter(props: Props) {
     }));
   };
 
+  const handleSpecificationToggle = (specificationId: number) => {
+    setSelectedSpecifications((prev: number[]) =>
+      prev.includes(specificationId)
+        ? prev.filter((id) => id !== specificationId)
+        : [...prev, specificationId]
+    );
+  };
+
+  const handleDeselectAll = () => {
+    setSelectedSpecifications([]);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h4>ფილტრი</h4>
-        <div className={styles.trash}>
+        <div className={styles.trash} onClick={handleDeselectAll}>
           <IconTrash />
           <p>გასუფთავება</p>
         </div>
@@ -73,12 +89,12 @@ export default function Filter(props: Props) {
                   </div>
                   <ul>
                     {specification.values.map((value: FilterValue) => (
-                      <div key={value.id} className={styles.select}>
+                      <li key={value.id} className={styles.select} onClick={() => handleSpecificationToggle(value.id)}>
                         <div className={styles.check}>
-                          <IconCheckSquare />
+                          {selectedSpecifications.includes(value.id) ? <IconCheckSquare /> : <IconEmptyCheckSquare />}
                         </div>
-                        <li>{value.value}</li>
-                      </div>
+                        <label htmlFor={value.id.toString()}>{value.value}</label>
+                      </li>
                     ))}
                   </ul>
                 </div>

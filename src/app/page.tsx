@@ -15,6 +15,9 @@ import SortButton from "@/Components/SortButton";
 export default function Home() {
   const [verticalStyle, setVerticalStyle] = useState<boolean>(true);
   const [sortBy, setSortBy] = useState<string | null>(null);
+  const [selectedSpecifications, setSelectedSpecifications] = useState<
+    number[]
+  >([]);
 
   return (
     <main className={styles.main}>
@@ -59,9 +62,16 @@ export default function Home() {
         </div>
         <div className={styles.content}>
           <div className={styles.filterContainer}>
-            <Filter />
+            <Filter
+              selectedSpecifications={selectedSpecifications}
+              setSelectedSpecifications={setSelectedSpecifications}
+            />
           </div>
-          <ProductContainer verticalStyle={verticalStyle} sortBy={sortBy} />
+          <ProductContainer
+            verticalStyle={verticalStyle}
+            sortBy={sortBy}
+            selectedSpecifications={selectedSpecifications}
+          />
         </div>
       </div>
     </main>

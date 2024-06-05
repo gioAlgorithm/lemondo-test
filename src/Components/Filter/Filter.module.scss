@@ -81,13 +81,22 @@
     margin-bottom: 15px;
     align-items: center;
     cursor: pointer;
+  
+    .check{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 28px;
+      width: 26px;
+    }
 
-    li{
+    label{
       margin-left: 13px;
       font-size: 14px;
       font-weight: 400;
       opacity: .7;
       line-height: 22px;
+      cursor: pointer;
     }
   }
 }
