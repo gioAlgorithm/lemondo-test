@@ -86,17 +86,19 @@ export default function Filter(props: Props) {
   // Updating search query for specifications
   useEffect(() => {
     specTimeout = setTimeout(() => {
-      if (selectedSpecifications.length !== 0) {
-        const params = new URLSearchParams(searchParams.toString());
+      const params = new URLSearchParams(searchParams.toString());
+      if (selectedSpecifications.length > 0) {
         const newSpecificationIds = selectedSpecifications.join(',');
         if (params.get('SpecificationIds') !== newSpecificationIds) {
           params.set('SpecificationIds', newSpecificationIds);
           router.replace(pathname + '?' + params.toString());
-          console.log("muteli");
         }
+      } else {
+        params.delete('SpecificationIds');
+        router.replace(pathname + '?' + params.toString());
       }
     }, 500);
-
+  
     return () => {
       clearTimeout(specTimeout);
     };
