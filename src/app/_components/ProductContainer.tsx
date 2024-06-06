@@ -8,12 +8,16 @@ interface Props {
   verticalStyle: boolean;
   sortBy: string | null;
   selectedSpecifications: number[];
+  minPrice: number;
+  maxPrice: number;
 }
 
 const ProductContainer = ({
   verticalStyle,
   sortBy,
   selectedSpecifications,
+  minPrice, 
+  maxPrice
 }: Props) => {
   const [fetchedProducts, setFetchedProducts] = useState<Product[]>([]);
   const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
@@ -26,13 +30,14 @@ const ProductContainer = ({
     setSortedProducts([]);
     setPage(1);
   };
+  const ifSelect = selectedSpecifications.length > 0 ? 999 : 12
 
   // Fetch products when component mounts or when the page state updates
   useEffect(() => {
     const fetchInitialProducts = async () => {
       try {
         setLoading(true);
-        const initialProducts = await fetchProducts(1);
+        const initialProducts = await fetchProducts(1, ifSelect, sortBy, selectedSpecifications, minPrice, maxPrice);
         setFetchedProducts(initialProducts);
         setLoading(false);
       } catch (error) {
@@ -41,8 +46,9 @@ const ProductContainer = ({
       }
     };
 
+    resetState(); // Reset the state before fetching new initial products
     fetchInitialProducts();
-  }, []);
+  }, [sortBy, selectedSpecifications, minPrice, maxPrice, ifSelect]); // Added minPrice and maxPrice to dependency array
 
   // Fetch more products when the page state updates
   useEffect(() => {
@@ -51,7 +57,7 @@ const ProductContainer = ({
     const fetchMoreProducts = async () => {
       try {
         setLoading(true);
-        const newProducts = await fetchProducts(page);
+        const newProducts = await fetchProducts(page, ifSelect, sortBy, selectedSpecifications, minPrice, maxPrice);
         setFetchedProducts((prev) => [...prev, ...newProducts]);
         setLoading(false);
       } catch (error) {
@@ -61,7 +67,7 @@ const ProductContainer = ({
     };
 
     fetchMoreProducts();
-  }, [page, selectedSpecifications]);
+  }, [page, sortBy, selectedSpecifications, minPrice, maxPrice, ifSelect]); // Added minPrice and maxPrice to dependency array
 
   // Sort products based on sortBy state
   useEffect(() => {
@@ -88,40 +94,6 @@ const ProductContainer = ({
 
     setSortedProducts(sortProducts(fetchedProducts, sortBy));
   }, [sortBy, fetchedProducts]);
-
-  // Fetch filtered products when selected specifications change
-  useEffect(() => {
-    const fetchFilteredProducts = async () => {
-      try {
-        setLoading(true);
-        const filteredProducts = await fetchProducts(1, 999, null, selectedSpecifications);
-        setFetchedProducts(filteredProducts);
-        setLoading(false);
-      } catch (error) {
-        setError("Failed to fetch filtered products");
-        setLoading(false);
-      }
-    };
-
-    if (selectedSpecifications.length > 0) {
-      resetState(); // Reset the state before fetching new filtered products
-      fetchFilteredProducts();
-    } else {
-      resetState(); // Reset the state before fetching new products without filters
-      const fetchInitialProducts = async () => {
-        try {
-          setLoading(true);
-          const initialProducts = await fetchProducts(1);
-          setFetchedProducts(initialProducts);
-          setLoading(false);
-        } catch (error) {
-          setError("Failed to fetch products");
-          setLoading(false);
-        }
-      };
-      fetchInitialProducts();
-    }
-  }, [selectedSpecifications]);
 
   if (loading && page === 1) {
     return <div>Loading...</div>;

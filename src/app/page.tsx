@@ -18,6 +18,9 @@ export default function Home() {
   const [selectedSpecifications, setSelectedSpecifications] = useState<
     number[]
   >([]);
+  const [minPrice, setMinPrice] = useState<number>(0);
+  const [maxPrice, setMaxPrice] = useState<number>(0);
+  console.log(minPrice, maxPrice)
 
   return (
     <main className={styles.main}>
@@ -65,12 +68,18 @@ export default function Home() {
             <Filter
               selectedSpecifications={selectedSpecifications}
               setSelectedSpecifications={setSelectedSpecifications}
+              minPrice={minPrice}
+              setMinPrice={setMinPrice}
+              maxPrice={maxPrice}
+              setMaxPrice={setMaxPrice}
             />
           </div>
           <ProductContainer
             verticalStyle={verticalStyle}
             sortBy={sortBy}
             selectedSpecifications={selectedSpecifications}
+            minPrice={minPrice}
+            maxPrice={maxPrice}
           />
         </div>
       </div>

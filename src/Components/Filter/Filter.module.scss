@@ -3,7 +3,6 @@
   max-height: auto;
   min-width: 350px;
   max-width: 350px;
-  margin-top: 10px;
 }
 .header{
   display: flex;
@@ -36,6 +35,71 @@
 .content{
   display: flex;
   flex-direction: column;
+
+  .priceFilter{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .sliderBox{
+      width: 95%;
+      margin-top: 30px;
+    }
+
+    .inputBox{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .priceInput{
+      width: 48%;
+      height: 42px;
+      border: 1px solid #EC5E2A;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      position: relative;
+
+      input{
+        width: 100%;
+        border: none;
+        outline: none;
+        text-align: right;
+        font-size: 18px;
+        line-height: 20px;
+        font-weight: 500;
+        opacity: .9;
+        padding: 10px 28px 10px 45px;
+        background-color: inherit;
+      }
+      label{
+        font-size: 14px;
+        font-weight: 400;
+        opacity: .7;
+        pointer-events: none;
+        margin-right: 5px;
+        position: absolute;
+        left: 13px;
+        top: 12px;
+      }
+      span{
+        font-size: 18px;
+        line-height: 20px;
+        pointer-events: none;
+        margin-left: 3px;
+        font-weight: 500;
+        opacity: .9;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+      }
+    }
+  }
 
   .specificationBox{
     width: 100%;

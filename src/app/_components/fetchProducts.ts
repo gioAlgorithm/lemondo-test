@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_URL = 'https://zoommer-api.lemon.do/v1/Products/v3?CategoryId=21';
+const API_URL = "https://zoommer-api.lemon.do/v1/Products/v3?CategoryId=21";
 
 export interface Product {
   id: number;
@@ -17,7 +17,14 @@ export interface Product {
   brandName: string | null;
 }
 
-export const fetchProducts = async (page: number, limit = 12, sortBy?: string | null, specificationIds?: number[]): Promise<Product[]> => {
+export const fetchProducts = async (
+  page: number,
+  limit = 12,
+  sortBy?: string | null,
+  specificationIds?: number[],
+  minPrice?: number,
+  maxPrice?: number
+): Promise<Product[]> => {
   try {
     let url = `${API_URL}&Page=${page}&Limit=${limit}`;
     if (sortBy) {
@@ -25,6 +32,12 @@ export const fetchProducts = async (page: number, limit = 12, sortBy?: string | 
     }
     if (specificationIds && specificationIds.length > 0) {
       url += `&SpecificationIds=${specificationIds.join(",")}`;
+    }
+    if (minPrice !== undefined) {
+      url += `&MinPrice=${minPrice}`; 
+    }
+    if (maxPrice !== undefined) {
+      url += `&MaxPrice=${maxPrice}`; 
     }
     const response = await axios.get(url);
 
@@ -34,7 +47,7 @@ export const fetchProducts = async (page: number, limit = 12, sortBy?: string | 
       throw new Error(`Failed to fetch products (status: ${response.status})`);
     }
   } catch (error) {
-    console.error('Error fetching products:', error);
+    console.error("Error fetching products:", error);
     throw error;
   }
 };
