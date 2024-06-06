@@ -23,10 +23,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={fira.className}>
-        <InfoNavbar />
-        <Navbar />
-        <FooterNav />
-        {children}
+          <InfoNavbar />
+          <Navbar />
+          <FooterNav />
+          {children}
       </body>
     </html>
   );

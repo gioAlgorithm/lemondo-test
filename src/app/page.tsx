@@ -11,19 +11,31 @@ import Filter from "@/Components/Filter";
 import ProductContainer from "./_components/ProductContainer";
 import FilterButton from "@/Components/FilterButton";
 import SortButton from "@/Components/SortButton";
+import { useSearchParams } from "next/navigation";
+import FilterResponsive from "@/Components/FilterResponsive";
 
 export default function Home() {
+
+  const searchParams = useSearchParams()
   const [verticalStyle, setVerticalStyle] = useState<boolean>(true);
   const [sortBy, setSortBy] = useState<string | null>(null);
-  const [selectedSpecifications, setSelectedSpecifications] = useState<
-    number[]
-  >([]);
-  const [minPrice, setMinPrice] = useState<number>(0);
-  const [maxPrice, setMaxPrice] = useState<number>(0);
-  console.log(minPrice, maxPrice)
+  const [showFilter, setShowFilter] = useState<boolean | undefined>(false)
+  const specificationIds = searchParams.get('SpecificationIds')?.split(',') || []
+  const minPrice = Number(searchParams.get('minPrice')) || undefined
+  const maxPrice = Number(searchParams.get('maxPrice')) || undefined
+  
 
   return (
     <main className={styles.main}>
+      <FilterResponsive showFilter={showFilter}>
+        <Filter 
+          specificationIds={specificationIds}
+          minPrice={minPrice}
+          maxPrice={maxPrice}
+          showFilter={showFilter}
+          setShowFilter={setShowFilter}
+        />
+      </FilterResponsive>
       <div className={styles.inner}>
         <div className={styles.header}>
           <div className={styles.leftBox}>
@@ -60,24 +72,22 @@ export default function Home() {
             <SortButton onSortChange={setSortBy} />
           </div>
           <div className={styles.headerResBox}>
-            <FilterButton />
+            <FilterButton setShowFilter={setShowFilter} />
           </div>
         </div>
         <div className={styles.content}>
           <div className={styles.filterContainer}>
             <Filter
-              selectedSpecifications={selectedSpecifications}
-              setSelectedSpecifications={setSelectedSpecifications}
+              specificationIds={specificationIds}
               minPrice={minPrice}
-              setMinPrice={setMinPrice}
               maxPrice={maxPrice}
-              setMaxPrice={setMaxPrice}
+              setShowFilter={setShowFilter}
             />
           </div>
           <ProductContainer
             verticalStyle={verticalStyle}
             sortBy={sortBy}
-            selectedSpecifications={selectedSpecifications}
+            specificationIds={specificationIds}
             minPrice={minPrice}
             maxPrice={maxPrice}
           />

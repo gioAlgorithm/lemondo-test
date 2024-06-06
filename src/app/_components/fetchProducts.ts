@@ -21,7 +21,7 @@ export const fetchProducts = async (
   page: number,
   limit = 12,
   sortBy?: string | null,
-  specificationIds?: number[],
+  specificationIds?: string[],
   minPrice?: number,
   maxPrice?: number
 ): Promise<Product[]> => {

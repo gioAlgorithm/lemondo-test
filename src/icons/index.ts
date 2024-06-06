@@ -15,3 +15,4 @@ export {default as IconFilter} from "./filter.svg"
 export {default as IconTrash} from "./trash.svg"
 export {default as IconCheckSquare} from './tick-square.svg'
 export {default as IconEmptyCheckSquare} from "./empty-check.svg"
+export {default as IconClose} from "./close.svg"
